@@ -43,15 +43,15 @@ namespace Alafein.API.Controllers
         [ProducesResponseType(typeof(Response<string>), 200)]
         public async Task<IActionResult> Register([FromBody] RegisterDto model)
         {
-            /*var data = await _accountService.Register(model);
+            var data = await _accountService.Register(model);
 
             if (data.Succeeded == false)
             {
                 return BadRequest(data);
             }
 
-            return Ok(data);*/
-            return Forbid();
+            return Ok(data);
+           // return Forbid();
         }
 
         /// <summary>
@@ -64,15 +64,15 @@ namespace Alafein.API.Controllers
         [ProducesResponseType(typeof(Response<HomeScreenModel>), 200)]
         public async Task<IActionResult> Login([FromBody] MobileLoginModel model)
         {
-            /*var data = await _accountService.MobileLogin(model);
+            var data = await _accountService.MobileLogin(model);
 
             if (data.Succeeded == false)
             {
                 return BadRequest(data);
             }
 
-            return Ok(data);*/
-            return Forbid();
+            return Ok(data);
+           // return Forbid();
         }
 
         /// <summary>
@@ -162,13 +162,13 @@ namespace Alafein.API.Controllers
         [ProducesResponseType(typeof(Response<HomeScreenModel>), 200)]
         public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenModel request)
         {
-            /*var data = await _accountService.RefreshToken(request);
+            var data = await _accountService.RefreshToken(request);
             if (data.Succeeded == false)
             {
                 return Unauthorized(data);
             }
-            return Ok(data);*/
-            return Forbid();
+            return Ok(data);
+            // return Forbid();
         }
 
         /// <summary>
@@ -234,15 +234,15 @@ namespace Alafein.API.Controllers
         [ProducesResponseType(typeof(Response<bool>), 200)]
         public async Task<IActionResult> GoogleAuth([FromBody] ExternalLoginViewModel model)
         {
-            /*var data = await _accountService.GoogleAuth(model);
+            var data = await _accountService.GoogleAuth(model);
 
             if (data.Succeeded == false)
             {
                 return BadRequest(data);
             }
 
-            return Ok(data);*/
-            return Forbid();
+            return Ok(data);
+            // return Forbid();
         }
 
         /// <summary>
@@ -255,15 +255,15 @@ namespace Alafein.API.Controllers
         [ProducesResponseType(typeof(Response<bool>), 200)]
         public async Task<IActionResult> FacebookAuth([FromBody] ExternalLoginViewModel model)
         {
-            /*var data = await _accountService.FacebookAuth(model);
+            var data = await _accountService.FacebookAuth(model);
 
             if (data.Succeeded == false)
             {
                 return BadRequest(data);
             }
 
-            return Ok(data);*/
-            return Forbid();
+            return Ok(data);
+        //    return Forbid();
         }
 
         /// <summary>

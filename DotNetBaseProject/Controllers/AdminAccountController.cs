@@ -28,15 +28,15 @@ namespace Alafein.API.Controllers
         [ProducesResponseType(typeof(Response<HomeScreenModel>), 200)]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
-            /*var data = await _accountService.Login(model);
+            var data = await _accountService.Login(model);
 
             if (data.Succeeded == false)
             {
                 return BadRequest(data);
             }
 
-            return Ok(data);*/
-            return Forbid();
+            return Ok(data);
+        //    return Forbid();
         }
 
         /// <summary>
@@ -49,13 +49,13 @@ namespace Alafein.API.Controllers
         [ProducesResponseType(typeof(Response<HomeScreenModel>), 200)]
         public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenModel request)
         {
-            /*var data = await _accountService.RefreshToken(request);
+            var data = await _accountService.RefreshToken(request);
             if (data.Succeeded == false)
             {
                 return Unauthorized(data);
             }
-            return Ok(data);*/
-            return Forbid();
+            return Ok(data);
+           // return Forbid();
         }
     }
 }

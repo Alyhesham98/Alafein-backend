@@ -1,6 +1,7 @@
 ﻿using Core.Interfaces.Identity.Services;
 using Core.Interfaces.Shared.Services;
 using Core.Settings;
+using DTOs.Shared.Responses;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -160,57 +161,57 @@ namespace Services.Implementation.Identity
             return string.Empty;
         }
 
-        /*public async Task<Response<bool>> SendVerificationMail(string name, string email, string id, string token)
+        public async Task<Response<bool>> SendVerificationMail(string name, string email, string id, string token)
         {
-            var mailBody = _emailService.RenderLiquidTemplate("VerifyAccountEmail.html",
-                new VerifyEmailRenderModel
-                {
-                    Id = id,
-                    Name = name,
-                    Token = token,
-                    RepLogo = _mailSettings.Logo,
-                    VerifyPath = _mailSettings.VerifyAccountPath
-                });
+            //var mailBody = _emailService.RenderLiquidTemplate("VerifyAccountEmail.html",
+            //    new VerifyEmailRenderModel
+            //    {
+            //        Id = id,
+            //        Name = name,
+            //        Token = token,
+            //        RepLogo = _mailSettings.Logo,
+            //        VerifyPath = _mailSettings.VerifyAccountPath
+            //    });
 
-            var verificationMail = await _emailService.SendEmail(new EmailModel
-            {
-                Body = mailBody,
-                Subject = "RepTrust Verification",
-                To = email
-            });
+            //var verificationMail = await _emailService.SendEmail(new EmailModel
+            //{
+            //    Body = mailBody,
+            //    Subject = "RepTrust Verification",
+            //    To = email
+            //});
 
-            if (!verificationMail.Succeeded)
-            {
-                return new Response<bool>("Failed to resend Verification Mail.");
-            }
+            //if (!verificationMail.Succeeded)
+            //{
+            //    return new Response<bool>("Failed to resend Verification Mail.");
+            //}
 
             return new Response<bool>(true);
-        }*/
-        /*
+        }
+        
         public async Task<Response<bool>> SendForgetPasswordMail(string name, string otp, string email)
         {
-            var mailBody = _emailService.RenderLiquidTemplate("ForgetPasswordEmail.html", new ForgetPasswordEmailRenderModel
-            {
-                Email = email,
-                Name = name,
-                Otp = otp,
-                ForgetPath = _mailSettings.ForgetPath,
-                RepLogo = _mailSettings.Logo
-            });
+            //var mailBody = _emailService.RenderLiquidTemplate("ForgetPasswordEmail.html", new ForgetPasswordEmailRenderModel
+            //{
+            //    Email = email,
+            //    Name = name,
+            //    Otp = otp,
+            //    ForgetPath = _mailSettings.ForgetPath,
+            //    RepLogo = _mailSettings.Logo
+            //});
 
-            var verificationMail = await _emailService.SendEmail(new EmailModel
-            {
-                Body = mailBody,
-                Subject = "RepTrust Reset Password",
-                To = email
-            });
+            //var verificationMail = await _emailService.SendEmail(new EmailModel
+            //{
+            //    Body = mailBody,
+            //    Subject = "RepTrust Reset Password",
+            //    To = email
+            //});
 
-            if (!verificationMail.Succeeded)
-            {
-                return new Response<bool>("Failed to resend Verification Mail.");
-            }
+            //if (!verificationMail.Succeeded)
+            //{
+            //    return new Response<bool>("Failed to resend Verification Mail.");
+            //}
 
             return new Response<bool>(true);
-        }*/
+        }
     }
 }

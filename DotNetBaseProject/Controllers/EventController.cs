@@ -41,7 +41,7 @@ namespace Alafein.API.Controllers
         [ProducesResponseType(typeof(PagedResponse<List<ListEventMobileDto>>), 200)]
         public async Task<IActionResult> GetPagination([FromQuery] PaginationParameter filter)
         {
-            /*var response = await _eventService.GetMobilePagination(new EventMobileListParameters
+            var response = await _eventService.GetMobilePagination(new EventMobileListParameters
             {
                 PageNumber = filter.PageNumber,
                 PageSize = filter.PageSize
@@ -50,8 +50,8 @@ namespace Alafein.API.Controllers
             {
                 return BadRequest(response);
             }
-            return Ok(response);*/
-            return Forbid();
+            return Ok(response);
+         //   return Forbid();
         }
 
         /// <summary>
@@ -65,13 +65,13 @@ namespace Alafein.API.Controllers
         [ProducesResponseType(typeof(PagedResponse<List<ListEventMobileDto>>), 200)]
         public async Task<IActionResult> GetFilterPagination([FromBody] EventMobileListParameters filter)
         {
-            /*var response = await _eventService.GetMobilePagination(filter);
+            var response = await _eventService.GetMobilePagination(filter);
             if (response.Succeeded == false)
             {
                 return BadRequest(response);
             }
-            return Ok(response);*/
-            return Forbid();
+            return Ok(response);
+           // return Forbid();
         }
 
         /// <summary>
@@ -103,13 +103,13 @@ namespace Alafein.API.Controllers
         [ProducesResponseType(typeof(Response<HomeDto>), 200)]
         public async Task<IActionResult> Home()
         {
-            /*var response = await _eventService.Home();
+            var response = await _eventService.Home();
             if (response.Succeeded == false)
             {
                 return BadRequest(response);
             }
-            return Ok(response);*/
-            return Forbid();
+            return Ok(response);
+           // return Forbid();
         }
 
         /// <summary>
@@ -177,13 +177,13 @@ namespace Alafein.API.Controllers
         [ProducesResponseType(typeof(Response<List<ListCategoryDto>>), 200)]
         public async Task<IActionResult> GetCategories(bool isAscending = false)
         {
-            /*var response = await _categoryService.GetWithoutPagination(isAscending);
+            var response = await _categoryService.GetWithoutPagination(isAscending);
             if (response.Succeeded == false)
             {
                 return BadRequest(response);
             }
-            return Ok(response);*/
-            return Forbid();
+            return Ok(response);
+           // return Forbid();
         }
 
         /// <summary>
@@ -196,13 +196,13 @@ namespace Alafein.API.Controllers
         [ProducesResponseType(typeof(Response<FeeDto>), 200)]
         public async Task<IActionResult> FeeConfiguration()
         {
-            /*var response = await _eventService.FeeConfiguration();
+            var response = await _eventService.FeeConfiguration();
             if (response.Succeeded == false)
             {
                 return BadRequest(response);
             }
-            return Ok(response);*/
-            return Forbid();
+            return Ok(response);
+           // return Forbid();
         }
     }
 }
