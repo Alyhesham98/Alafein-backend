@@ -27,6 +27,7 @@ namespace Alafein.API.Controllers
         /// <response code="200">Returns the Event Organizer Details</response>
         /// <response code="400">something goes wrong in backend</response>
         [HttpGet("Detail/{id}")]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(Response<OrganizerDetailDto>), 200)]
         public async Task<IActionResult> Detail([FromRoute] long id)
         {
