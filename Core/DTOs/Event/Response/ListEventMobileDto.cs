@@ -6,7 +6,8 @@ namespace Core.DTOs.Event.Response
     {
         public long Id { get; set; }
         public string? Poster { get; set; } = string.Empty;
-        public string? Name { get; set; } = string.Empty;
+        public string? NameEn { get; set; } = string.Empty;
+        public string? NameAr { get; set; } = string.Empty;
         public DropdownViewModel Venue { get; set; } = new DropdownViewModel();
         public string Date { get; set; } = string.Empty;
         public bool? IsFavourite { get; set; }

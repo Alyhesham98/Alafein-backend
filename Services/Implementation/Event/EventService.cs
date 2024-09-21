@@ -179,7 +179,8 @@ namespace Services.Implementation.Event
                                .FavouriteSubmissions
                                .Any(c => c.SubmissionId == s.SubmissionId &&
                                          c.UserId == _authService.UserId!),
-                Name = s.Submission.EventNameEN,
+                NameEn = s.Submission.EventNameEN,
+                NameAr = s.Submission.EventNameAR,
                 Organizer = new IdentityDropdownDto
                 {
                     Id = s.Submission.User.Id,

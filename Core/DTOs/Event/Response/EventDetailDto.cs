@@ -10,7 +10,8 @@ namespace Core.DTOs.Event.Response
         public string Poster { get; set; } = string.Empty;
         public CategoryDropdownDto Category { get; set; } = new CategoryDropdownDto();
         public bool IsFavourite { get; set; }
-        public string Name { get; set; } = string.Empty;
+        public string NameEn { get; set; } = string.Empty;
+        public string NameAr { get; set; } = string.Empty;
         public IdentityDropdownDto Organizer { get; set; } = new IdentityDropdownDto();
         public string Description { get; set; } = string.Empty;
         public string Date { get; set; } = string.Empty;

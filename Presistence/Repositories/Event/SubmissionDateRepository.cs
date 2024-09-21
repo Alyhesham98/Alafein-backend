@@ -199,7 +199,8 @@ namespace Presistence.Repositories.Event
                                    {
                                        Id = s.Id,
                                        Poster = s.Submission.Poster,
-                                       Name = s.Submission.EventNameEN,
+                                       NameEn = s.Submission.EventNameEN,
+                                       NameAr = s.Submission.EventNameAR,
                                        Venue = new DropdownViewModel
                                        {
                                            Id = s.Submission.Venue.Id,
