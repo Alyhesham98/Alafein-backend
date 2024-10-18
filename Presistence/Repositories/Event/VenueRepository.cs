@@ -16,6 +16,11 @@ namespace Presistence.Repositories.Event
         {
             _context = context;
         }
+        public async Task<int> GetLastTaskOrderId()
+        {
+            var item = await _context.Venues.OrderBy(u => u.Id).LastOrDefaultAsync();
+            return (int)item.Id;
+        }
 
         public async Task<(int Count, IList<ListVenueDto>? Data)> GetPaginaton(VenueParameters parameters)
         {

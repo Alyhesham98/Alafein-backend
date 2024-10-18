@@ -14,12 +14,14 @@ using Core.Interfaces.Shared.Services;
 using DTOs.Shared;
 using DTOs.Shared.Responses;
 using Microsoft.AspNetCore.Identity;
+using System;
 using System.Text.RegularExpressions;
 
 namespace Services.Implementation.Identity
 {
     internal sealed class VenueService : IVenueService
     {
+        private readonly IOrganizerRepository _organizerRepo;
         private readonly IVenueRepository _venueRepo;
         private readonly IUnitOfWork _unitOfWork;
         private readonly RoleManager<Role> _roleManager;
@@ -30,7 +32,8 @@ namespace Services.Implementation.Identity
         private readonly IFacilityRepository _facilityRepo;
         private readonly IMapper _mapper;
         private readonly IAuthenticatedUserService _authenticatedUserService;
-        public VenueService(IVenueRepository venueRepo,
+        public VenueService(IOrganizerRepository organizerRepo, 
+                            IVenueRepository venueRepo,
                             IUnitOfWork unitOfWork,
                             RoleManager<Role> roleManager,
                             UserManager<User> userManager,
@@ -41,6 +44,7 @@ namespace Services.Implementation.Identity
                             IMapper mapper,
                             IAuthenticatedUserService authenticatedUserService)
         {
+            _organizerRepo = organizerRepo;
             _venueRepo = venueRepo;
             _unitOfWork = unitOfWork;
             _roleManager = roleManager;
@@ -108,8 +112,20 @@ namespace Services.Implementation.Identity
                     var venue = _mapper.Map<Venue>(request.Venue);
                     venue.UserId = user.Id;
 
+                    int orgId = await _organizerRepo.GetLastTaskOrderId();
+                    int venuId = await _venueRepo.GetLastTaskOrderId();
+                    int max = GetMax(orgId, venuId);
+                    venue.Id = max + 1;
                     _venueRepo.Add(venue);
                     await _unitOfWork.SaveAsync();
+                    /*var entity = await _organizerRepo.GetByIdAsync(venue.Id);
+                    if(entity != null) {
+                        int valueId = await _organizerRepo.GetLastTaskOrderId();
+                        venue.Id = valueId + 1;
+                        _venueRepo.Update(venue);
+                        await _unitOfWork.SaveAsync();
+                    }*/
+
                     return new Response<string>(user.Id, "Client created successfully");
                 }
                 return new Response<string>("Can't created Client right now.", resultUserRole.Errors.Select(s => s.Description).ToList());
@@ -124,7 +140,10 @@ namespace Services.Implementation.Identity
                 return new Response<string>("Can't created Client right now.");
             }
         }
-
+        public static int GetMax(int first, int second)
+        {
+            return first > second ? first : second;
+        }
         public async Task<Response<RegisterVenueDropdownDto>> Dropdown()
         {
             var categories = await _categoryRepo.GetAllWithSelectorAsync(s => new DropdownViewModel

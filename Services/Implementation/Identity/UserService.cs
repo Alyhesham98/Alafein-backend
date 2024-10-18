@@ -314,7 +314,8 @@ namespace Services.Implementation.Identity
                 Other = s.Other,
                 WebsiteURL = s.WebsiteURL,
                 Address = s.Address,
-                Description = s.Description,
+                DescriptionEn = s.DescriptionEn,
+                DescriptionAr = s.DescriptionAr,
                 MapLink = s.MapLink
             }, true,
             f => f.UserId == _authService.UserId && !f.IsDeleted);

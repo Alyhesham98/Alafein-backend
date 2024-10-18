@@ -13,7 +13,8 @@ namespace Core.DTOs.Event.Response
         public string? Facebook { get; set; }
         public string? WebsiteURL { get; set; }
         public string? Other { get; set; }
-        public string Description { get; set; } = string.Empty;
+        public string DescriptionEn { get; set; } = string.Empty;
+        public string DescriptionAr { get; set; } = string.Empty;
         public CategoryDetailDto Category { get; set; } = new CategoryDetailDto();
     }
 }

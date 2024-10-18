@@ -8,5 +8,6 @@ namespace Core.Interfaces.Event.Repositories
     public interface IOrganizerRepository : IGenericRepository<Organizer>
     {
         Task<(int Count, IList<ListEventOrganizerDto>? Data)> GetPaginaton(EventOrganizerParameters parameters);
+        Task<int> GetLastTaskOrderId();
     }
 }

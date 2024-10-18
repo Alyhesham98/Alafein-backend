@@ -13,6 +13,7 @@ using Core.Interfaces.Shared.Services;
 using DTOs.Shared;
 using DTOs.Shared.Responses;
 using Microsoft.AspNetCore.Identity;
+using System;
 using System.Text.RegularExpressions;
 
 namespace Services.Implementation.Identity
@@ -20,6 +21,7 @@ namespace Services.Implementation.Identity
     internal sealed class OrganizerService : IOrganizerService
     {
         private readonly IOrganizerRepository _organizerRepo;
+        private readonly IVenueRepository _venueRepo;
         private readonly IUnitOfWork _unitOfWork;
         private readonly RoleManager<Role> _roleManager;
         private readonly UserManager<User> _userManager;
@@ -29,6 +31,7 @@ namespace Services.Implementation.Identity
         private readonly IMapper _mapper;
         private readonly IAuthenticatedUserService _authenticatedUserService;
         public OrganizerService(IOrganizerRepository organizerRepo,
+                                IVenueRepository venueRepo,
                                 IUnitOfWork unitOfWork,
                                 RoleManager<Role> roleManager,
                                 UserManager<User> userManager,
@@ -38,6 +41,7 @@ namespace Services.Implementation.Identity
                                 IMapper mapper,
                                 IAuthenticatedUserService authenticatedUserService)
         {
+            _venueRepo = venueRepo;
             _organizerRepo = organizerRepo;
             _unitOfWork = unitOfWork;
             _roleManager = roleManager;
@@ -103,9 +107,15 @@ namespace Services.Implementation.Identity
                 {
                     var organizer = _mapper.Map<Organizer>(request.Organizer);
                     organizer.UserId = user.Id;
+                    int orgId = await _organizerRepo.GetLastTaskOrderId();
+                    int venuId = await _venueRepo.GetLastTaskOrderId();
+                    int max = GetMax(orgId, venuId);
+                    organizer.Id = max + 1;
 
                     _organizerRepo.Add(organizer);
                     await _unitOfWork.SaveAsync();
+
+                    
 
                     return new Response<string>(user.Id, "Client created successfully");
                 }
@@ -120,6 +130,10 @@ namespace Services.Implementation.Identity
 
                 return new Response<string>("Can't created Client right now.");
             }
+        }
+        public static int GetMax(int first, int second)
+        {
+            return first > second ? first : second;
         }
 
         public async Task<Response<IList<DropdownViewModel>>> Dropdown()
@@ -160,7 +174,8 @@ namespace Services.Implementation.Identity
                 Other = s.Other,
                 WebsiteURL = s.WebsiteURL,
                 Address = s.Address,
-                Description = s.Description,
+                DescriptionEn = s.DescriptionEn,
+                DescriptionAr = s.DescriptionAr,
                 MapLink = s.MapLink
             }, true,
             f => f.Id == id && !f.IsDeleted);

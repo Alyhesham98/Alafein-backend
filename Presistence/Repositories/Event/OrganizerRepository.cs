@@ -70,5 +70,11 @@ namespace Presistence.Repositories.Event
 
             return new(count, data);
         }
+
+        public async Task<int> GetLastTaskOrderId()
+        {
+            var item = await _context.Organizers.OrderBy(u => u.Id).LastOrDefaultAsync();
+            return (int)item.Id;
+        }
     }
 }

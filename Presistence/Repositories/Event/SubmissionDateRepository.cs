@@ -140,7 +140,7 @@ namespace Presistence.Repositories.Event
         public async Task<(int Count, IList<ListEventMobileDto>? Data)> GetEventsMobile(EventMobileListParameters parameters, Expression<Func<SubmissionDate, bool>>? filter, string userId)
         {
             var events = _context.SubmissionDates
-                                 .Where(f => !f.IsDeleted && f.Submission.IsApproved).OrderByDescending(o => o.Id);
+                                 .Where(f => !f.IsDeleted && f.Submission.IsApproved).OrderByDescending(o => o.Date);
 
             if (filter is not null)
             {
