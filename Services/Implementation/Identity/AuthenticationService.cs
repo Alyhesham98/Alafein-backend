@@ -636,16 +636,16 @@ namespace Services.Implementation.Identity
                     }
                     return new Response<string>(user.Id, "Client created successfully");
                 }
-                return new Response<string>("Can't created Client right now.", resultUserRole.Errors.Select(s => s.Description).ToList());
+                return new Response<string>("This email is already associated with an existing account. Please log in or use a different email.", resultUserRole.Errors.Select(s => s.Description).ToList());
             }
             else
             {
                 if (resultUser.Errors is not null)
                 {
-                    return new Response<string>("Can't created Client right now.", resultUser.Errors.Select(s => s.Description).ToList());
+                    return new Response<string>("This email is already associated with an existing account. Please log in or use a different email.", resultUser.Errors.Select(s => s.Description).ToList());
                 }
 
-                return new Response<string>("Can't created Client right now.");
+                return new Response<string>("This email is already associated with an existing account. Please log in or use a different email.");
             }
         }
 
