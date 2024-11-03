@@ -23,11 +23,11 @@ namespace Presistence.Repositories.Event
         public async Task<(int Count, IList<ListEventDto>? Data)> GetEvents(EventListParameters parameters, Expression<Func<SubmissionDate, bool>>? filter)
         {
             var events = _context.SubmissionDates
-                                 .Where(f => !f.IsDeleted).OrderByDescending(o => o.Id);
+                                 .Where(f => !f.IsDeleted).Order(o => o.Date.Day);
 
             if (filter is not null)
             {
-                events = events.Where(filter).OrderByDescending(o => o.Id);
+                events = events.Where(filter).Order(o => o.Id);
             }
 
             if (parameters.Name is not null)
@@ -37,7 +37,7 @@ namespace Presistence.Repositories.Event
 
                 events = events.Where(f => f.Submission
                                             .EventNameEN
-                                            .Contains(search)).OrderByDescending(o => o.Id);
+                                            .Contains(search)).Order(o => o.Id);
             }
 
             if (parameters.Venue is not null)
@@ -53,7 +53,7 @@ namespace Presistence.Repositories.Event
                                             .Venue
                                             .User
                                             .LastName
-                                            .Contains(search)).OrderByDescending(o => o.Id);
+                                            .Contains(search)).Order(o => o.Id);
             }
 
             if (parameters.Organizer is not null)
@@ -67,37 +67,37 @@ namespace Presistence.Repositories.Event
                                            f.Submission
                                             .User
                                             .LastName
-                                            .Contains(search)).OrderByDescending(o => o.Id);
+                                            .Contains(search)).Order(o => o.Id);
             }
 
             if (parameters.CategoryId is not null)
             {
                 events = events.Where(f => f.Submission
-                                            .CategoryId == parameters.CategoryId).OrderByDescending(o => o.Id);
+                                            .CategoryId == parameters.CategoryId).Order(o => o.Id);
             }
 
             if (parameters.IsApproved is not null)
             {
                 events = events.Where(f => f.Submission
-                                            .IsApproved == parameters.IsApproved).OrderByDescending(o => o.Id);
+                                            .IsApproved == parameters.IsApproved).Order(o => o.Id);
             }
 
             if (parameters.IsSpotlight is not null)
             {
                 events = events.Where(f => f.Submission
-                                            .IsSpotlight == parameters.IsSpotlight).OrderByDescending(o => o.Id);
+                                            .IsSpotlight == parameters.IsSpotlight).Order(o => o.Id);
             }
 
             if (parameters.IsPending is not null)
             {
                 events = events.Where(f => f.Submission
-                                            .Status == SubmissionStatus.PENDING).OrderByDescending(o => o.Id);
+                                            .Status == SubmissionStatus.PENDING).Order(o => o.Id);
             }
 
             var count = await events.CountAsync();
 
             var data = await events.Skip((parameters.PageNumber - 1) * parameters.PageSize)
-                                   .Take(parameters.PageSize).OrderByDescending(o => o.Id)
+                                   .Take(parameters.PageSize).Order(o => o.Id)
                                    .Select(s => new ListEventDto
                                    {
                                        Id = s.Id,
