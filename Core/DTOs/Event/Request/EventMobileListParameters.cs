@@ -4,7 +4,8 @@ namespace Core.DTOs.Event.Request
 {
     public class EventMobileListParameters : PaginationParameter
     {
-        public string? Name { get; set; }
+        public string? NameAr { get; set; }
+        public string? NameEN { get; set; }
         public bool? IsFavourite { get; set; }
         public DateTime? From { get; set; }
         public DateTime? To { get; set; }

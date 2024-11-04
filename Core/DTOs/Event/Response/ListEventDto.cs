@@ -8,7 +8,8 @@ namespace Core.DTOs.Event.Response
         public long Id { get; set; }
         public long SubmissionId { get; set; }
         public string Poster { get; set; } = string.Empty;
-        public string Name { get; set; } = string.Empty;
+        public string NameAr { get; set; } = string.Empty;
+        public string NameEn { get; set; } = string.Empty;
         public DropdownViewModel Category { get; set; } = new DropdownViewModel();
         public DropdownViewModel Venue { get; set; } = new DropdownViewModel();
         public string? VenueImage { get; set; }
