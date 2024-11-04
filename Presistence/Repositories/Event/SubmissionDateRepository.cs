@@ -30,20 +30,14 @@ namespace Presistence.Repositories.Event
                 events = events.Where(filter).OrderByDescending(o => o.Date.Day);
             }
 
-            if (parameters.NameEn is not null)
+            if (parameters.Name is not null)
             {
-                var search = parameters.NameEn
+                var search = parameters.Name
                                        .Trim();
 
                 events = events.Where(f => f.Submission.EventNameEN.Contains(search) ||
                                f.Submission.EventNameEN.Contains(search))
                    .OrderByDescending(o => o.Date.Day);
-            }
-            if (parameters.NameAr is not null)
-            {
-                var search = parameters.NameAr
-                                       .Trim();
-
                 events = events.Where(f => f.Submission.EventNameAR.Contains(search) ||
                                f.Submission.EventNameAR.Contains(search))
                    .OrderByDescending(o => o.Date.Day);
@@ -156,24 +150,17 @@ namespace Presistence.Repositories.Event
                 events = events.Where(filter).OrderByDescending(o => o.Date.Day);
             }
 
-            if (parameters.NameAr is not null)
+            if (parameters.Name is not null)
             {
-                var search = parameters.NameAr
+                var search = parameters.Name
                                        .Trim();
 
                 events = events.Where(f => f.Submission
                                             .EventNameAR
                                             .Contains(search)).OrderByDescending(o => o.Date.Day);
-            }
-
-            if (parameters.NameEN is not null)
-            {
-                var search = parameters.NameEN
-                                       .Trim();
-
                 events = events.Where(f => f.Submission
-                                            .EventNameEN
-                                            .Contains(search)).OrderByDescending(o => o.Date.Day);
+                            .EventNameEN
+                            .Contains(search)).OrderByDescending(o => o.Date.Day);
             }
 
             if (parameters.IsFavourite is not null &&
