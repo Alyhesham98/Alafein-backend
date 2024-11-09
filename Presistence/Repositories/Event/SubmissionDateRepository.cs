@@ -35,12 +35,13 @@ namespace Presistence.Repositories.Event
                 var search = parameters.Name
                                        .Trim();
 
-                events = events.Where(f => f.Submission.EventNameEN.Contains(search) ||
-                               f.Submission.EventNameEN.Contains(search))
-                   .OrderByDescending(o => o.Date.Day);
-                events = events.Where(f => f.Submission.EventNameAR.Contains(search) ||
-                               f.Submission.EventNameAR.Contains(search))
-                   .OrderByDescending(o => o.Date.Day);
+
+                events = events.Where(f => f.Submission
+                                            .EventNameAR
+                                            .Contains(search)).OrderByDescending(o => o.Date.Day);
+                events = events.Where(f => f.Submission
+                            .EventNameEN
+                            .Contains(search)).OrderByDescending(o => o.Date.Day);
             }
             if (parameters.Venue is not null)
             {
