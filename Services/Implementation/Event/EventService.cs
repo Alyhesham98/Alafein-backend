@@ -181,6 +181,8 @@ namespace Services.Implementation.Event
                                          c.UserId == _authService.UserId!),
                 NameEn = s.Submission.EventNameEN,
                 NameAr = s.Submission.EventNameAR,
+                DescriptionAr = s.Submission.EventDescriptionAR,
+                DescriptionEn = s.Submission.EventDescriptionEN,
                 Organizer = new IdentityDropdownDto
                 {
                     Id = s.Submission.User.Id,

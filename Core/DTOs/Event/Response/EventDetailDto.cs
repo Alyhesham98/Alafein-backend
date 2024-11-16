@@ -12,6 +12,8 @@ namespace Core.DTOs.Event.Response
         public bool IsFavourite { get; set; }
         public string NameEn { get; set; } = string.Empty;
         public string NameAr { get; set; } = string.Empty;
+        public string DescriptionEn { get; set; } = string.Empty;
+        public string DescriptionAr { get; set; } = string.Empty;
         public IdentityDropdownDto Organizer { get; set; } = new IdentityDropdownDto();
         public string Description { get; set; } = string.Empty;
         public string Date { get; set; } = string.Empty;
