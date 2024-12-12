@@ -175,12 +175,12 @@ namespace Presistence.Repositories.Event
 
             if (parameters.From is not null)
             {
-                events = events.Where(f => f.Date >= parameters.From).OrderBy(o => o.Date);
+                events = events.Where(f => f.Date.Day >= parameters.From.Value.Day).OrderBy(o => o.Date);
             }
 
             if (parameters.To is not null)
             {
-                events = events.Where(f => f.Date <= parameters.To).OrderBy(o => o.Date);
+                events = events.Where(f => f.Date.Day <= parameters.To.Value.Day).OrderBy(o => o.Date);
             }
 
             if (parameters.CategoryId is not null)
