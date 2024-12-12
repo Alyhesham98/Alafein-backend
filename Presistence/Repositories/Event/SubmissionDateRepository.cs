@@ -23,7 +23,7 @@ namespace Presistence.Repositories.Event
         public async Task<(int Count, IList<ListEventDto>? Data)> GetEvents(EventListParameters parameters, Expression<Func<SubmissionDate, bool>>? filter)
         {
             var events = _context.SubmissionDates
-                                 .Where(f => !f.IsDeleted&&f.Submission.Status == SubmissionStatus.ACCEPT).OrderBy(o => o.Date.Day);
+                                 .Where(f => !f.IsDeleted).OrderBy(o => o.Date.Day);
 
             if (filter is not null)
             {
@@ -144,7 +144,7 @@ namespace Presistence.Repositories.Event
         public async Task<(int Count, IList<ListEventMobileDto>? Data)> GetEventsMobile(EventMobileListParameters parameters, Expression<Func<SubmissionDate, bool>>? filter, string userId)
         {
             var events = _context.SubmissionDates
-                                 .Where(f => !f.IsDeleted && f.Submission.IsApproved).OrderBy(o => o.Date);
+                                 .Where(f => !f.IsDeleted && f.Submission.IsApproved && f.Submission.Status == SubmissionStatus.ACCEPT).OrderBy(o => o.Date);
 
             if (filter is not null)
             {
