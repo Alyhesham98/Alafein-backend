@@ -23,11 +23,11 @@ namespace Presistence.Repositories.Event
         public async Task<(int Count, IList<ListEventDto>? Data)> GetEvents(EventListParameters parameters, Expression<Func<SubmissionDate, bool>>? filter)
         {
             var events = _context.SubmissionDates
-                                 .Where(f => !f.IsDeleted).OrderBy(o => o.Date.Day);
+                                 .Where(f => !f.IsDeleted).OrderBy(o => o.CreatedAt.Date);
 
             if (filter is not null)
             {
-                events = events.Where(filter).OrderBy(o => o.Date.Day);
+                events = events.Where(filter).OrderBy(o => o.CreatedAt.Date);
             }
 
             if (parameters.Name is not null)
@@ -38,10 +38,10 @@ namespace Presistence.Repositories.Event
 
                 events = events.Where(f => f.Submission
                                             .EventNameAR
-                                            .Contains(search)).OrderBy(o => o.Date.Day);
+                                            .Contains(search)).OrderBy(o => o.CreatedAt.Date);
                 events = events.Where(f => f.Submission
                             .EventNameEN
-                            .Contains(search)).OrderBy(o => o.Date.Day);
+                            .Contains(search)).OrderBy(o => o.CreatedAt.Date);
             }
             if (parameters.Venue is not null)
             {
@@ -56,7 +56,7 @@ namespace Presistence.Repositories.Event
                                             .Venue
                                             .User
                                             .LastName
-                                            .Contains(search)).OrderBy(o => o.Date.Day);
+                                            .Contains(search)).OrderBy(o => o.CreatedAt.Date);
             }
 
             if (parameters.Organizer is not null)
@@ -70,37 +70,37 @@ namespace Presistence.Repositories.Event
                                            f.Submission
                                             .User
                                             .LastName
-                                            .Contains(search)).OrderBy(o => o.Date.Day);
+                                            .Contains(search)).OrderBy(o => o.CreatedAt.Date);
             }
 
             if (parameters.CategoryId is not null)
             {
                 events = events.Where(f => f.Submission
-                                            .CategoryId == parameters.CategoryId).OrderBy(o => o.Date.Day);
+                                            .CategoryId == parameters.CategoryId).OrderBy(o => o.CreatedAt.Date);
             }
 
             if (parameters.IsApproved is not null)
             {
                 events = events.Where(f => f.Submission
-                                            .IsApproved == parameters.IsApproved).OrderBy(o => o.Date.Day);
+                                            .IsApproved == parameters.IsApproved).OrderBy(o => o.CreatedAt.Date);
             }
 
             if (parameters.IsSpotlight is not null)
             {
                 events = events.Where(f => f.Submission
-                                            .IsSpotlight == parameters.IsSpotlight).OrderBy(o => o.Date.Day);
+                                            .IsSpotlight == parameters.IsSpotlight).OrderBy(o => o.CreatedAt.Date);
             }
 
             if (parameters.IsPending is not null)
             {
                 events = events.Where(f => f.Submission
-                                            .Status == SubmissionStatus.PENDING).OrderBy(o => o.Date.Day);
+                                            .Status == SubmissionStatus.PENDING).OrderBy(o => o.CreatedAt.Date);
             }
 
             var count = await events.CountAsync();
 
             var data = await events.Skip((parameters.PageNumber - 1) * parameters.PageSize)
-                                   .Take(parameters.PageSize).OrderBy(o => o.Date.Day)
+                                   .Take(parameters.PageSize).OrderBy(o => o.CreatedAt.Date)
                                    .Select(s => new ListEventDto
                                    {
                                        Id = s.Id,
