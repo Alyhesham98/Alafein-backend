@@ -144,7 +144,7 @@ namespace Alafein.API.Controllers
         [ProducesResponseType(typeof(PagedResponse<List<ListEventDto>>), 200)]
         public async Task<IActionResult> GetSpotlightPagination([FromQuery] PaginationParameter filter)
         {
-            var response = await _eventService.GetPagination(new EventListParameters
+            var response = await _eventService.GetPaginationSpotLight(new EventListParameters
             {
                 PageNumber = filter.PageNumber,
                 PageSize = filter.PageSize,

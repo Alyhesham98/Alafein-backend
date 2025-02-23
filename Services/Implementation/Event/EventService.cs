@@ -84,7 +84,19 @@ namespace Services.Implementation.Event
             }
             return new PagedResponse<IList<ListEventDto>>(result.Data, filter.PageNumber, filter.PageSize, result.Count);
         }
-
+        public async Task<PagedResponse<IList<ListEventDto>>> GetPaginationSpotLight(EventListParameters filter)
+        {
+            var result = await _submissionDateRepo.GetEventsSpotLight(filter,
+                                                              f => f.Date
+                                                                    .Date >= _dateService.NowUtc
+                                                                                         .Date);
+            if (result.Count == 0 ||
+                result.Data == null)
+            {
+                return new PagedResponse<IList<ListEventDto>>(null, filter.PageNumber, filter.PageSize);
+            }
+            return new PagedResponse<IList<ListEventDto>>(result.Data, filter.PageNumber, filter.PageSize, result.Count);
+        }
         public async Task<Response<bool>> ToggleStatus(ToggleSubmissionStatusDto request)
         {
             var submission = await _submissionDateRepo.GetByIdAsync(request.Id,

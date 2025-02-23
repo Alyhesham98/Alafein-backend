@@ -9,6 +9,7 @@ namespace Core.Interfaces.Event.Repositories
     public interface ISubmissionDateRepository : IGenericRepository<SubmissionDate>
     {
         Task<(int Count, IList<ListEventDto>? Data)> GetEvents(EventListParameters parameters, Expression<Func<SubmissionDate, bool>>? filter);
+        Task<(int Count, IList<ListEventDto>? Data)> GetEventsSpotLight(EventListParameters parameters, Expression<Func<SubmissionDate, bool>>? filter);
         Task<(int Count, IList<ListEventMobileDto>? Data)> GetEventsMobile(EventMobileListParameters parameters, Expression<Func<SubmissionDate, bool>>? filter, string userId);
         Task<IList<HomeEventDto>> Home(HomeEventListParameters parameters, Expression<Func<SubmissionDate, bool>>? filter);
         Task<List<SubmissionDate>> GetBySubmissionId(long? submissionId);

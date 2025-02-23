@@ -9,6 +9,7 @@ namespace Core.Interfaces.Event.Services
     {
         Task<PagedResponse<IList<ListEventMobileDto>>> GetMobilePagination(EventMobileListParameters filter);
         Task<PagedResponse<IList<ListEventDto>>> GetPagination(EventListParameters filter);
+        Task<PagedResponse<IList<ListEventDto>>> GetPaginationSpotLight(EventListParameters filter);
         Task<Response<bool>> ToggleStatus(ToggleSubmissionStatusDto request);
         Task<Response<List<DropdownViewModel>>> Dropdown();
         Task<Response<bool>> ToggleSpotlight(ToggleSubmissionSpotlightDto request);

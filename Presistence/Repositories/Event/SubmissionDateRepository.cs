@@ -141,6 +141,127 @@ namespace Presistence.Repositories.Event
             return new(count, data);
         }
 
+        public async Task<(int Count, IList<ListEventDto>? Data)> GetEventsSpotLight(EventListParameters parameters, Expression<Func<SubmissionDate, bool>>? filter)
+        {
+            var events = _context.SubmissionDates
+                                 .Where(f => !f.IsDeleted).OrderByDescending(o => o.SpotlightOrder);
+
+            if (filter is not null)
+            {
+                events = events.Where(filter).OrderByDescending(o => o.SpotlightOrder);
+            }
+
+            if (parameters.Name is not null)
+            {
+                var search = parameters.Name
+                                       .Trim();
+
+
+                events = events.Where(f => f.Submission
+                                            .EventNameAR
+                                            .Contains(search)).OrderByDescending(o => o.SpotlightOrder);
+                events = events.Where(f => f.Submission
+                            .EventNameEN
+                            .Contains(search)).OrderByDescending(o => o.SpotlightOrder);
+            }
+            if (parameters.Venue is not null)
+            {
+                var search = parameters.Venue.Trim();
+
+                events = events.Where(f => f.Submission
+                                            .Venue
+                                            .User
+                                            .FirstName
+                                            .Contains(search) ||
+                                           f.Submission
+                                            .Venue
+                                            .User
+                                            .LastName
+                                            .Contains(search)).OrderByDescending(o => o.SpotlightOrder);
+            }
+
+            if (parameters.Organizer is not null)
+            {
+                var search = parameters.Organizer.Trim();
+
+                events = events.Where(f => f.Submission
+                                            .User
+                                            .FirstName
+                                            .Contains(search) ||
+                                           f.Submission
+                                            .User
+                                            .LastName
+                                            .Contains(search)).OrderByDescending(o => o.SpotlightOrder);
+            }
+
+            if (parameters.CategoryId is not null)
+            {
+                events = events.Where(f => f.Submission
+                                            .CategoryId == parameters.CategoryId).OrderByDescending(o => o.SpotlightOrder);
+            }
+
+            if (parameters.IsApproved is not null)
+            {
+                events = events.Where(f => f.Submission
+                                            .IsApproved == parameters.IsApproved).OrderByDescending(o => o.SpotlightOrder);
+            }
+
+            if (parameters.IsSpotlight is not null)
+            {
+                events = events.Where(f => f.Submission
+                                            .IsSpotlight == parameters.IsSpotlight).OrderByDescending(o => o.SpotlightOrder);
+            }
+
+            if (parameters.IsPending is not null)
+            {
+                events = events.Where(f => f.Submission
+                                            .Status == SubmissionStatus.PENDING).OrderByDescending(o => o.SpotlightOrder);
+            }
+
+            var count = await events.CountAsync();
+
+            var data = await events.Skip((parameters.PageNumber - 1) * parameters.PageSize)
+                                   .Take(parameters.PageSize).OrderByDescending(o => o.SpotlightOrder)
+                                   .Select(s => new ListEventDto
+                                   {
+                                       Id = s.Id,
+                                       SubmissionId = s.SubmissionId,
+                                       Poster = s.Submission.Poster,
+                                       NameEn = s.Submission.EventNameEN,
+                                       NameAr = s.Submission.EventNameAR,
+                                       Category = new DropdownViewModel
+                                       {
+                                           Id = s.Submission.Category.Id,
+                                           Name = s.Submission.Category.Name
+                                       },
+                                       Venue = new DropdownViewModel
+                                       {
+                                           Id = s.Submission.Venue.Id,
+                                           Name = s.Submission.Venue.VenueName
+                                       },
+                                       VenueImage = s.Submission.Venue.User.ProfilePicture,
+                                       Organizer = new IdentityDropdownDto
+                                       {
+                                           Id = s.Submission.User.Id,
+                                           Name = s.Submission.User.FirstName + " " + s.Submission.User.LastName
+                                       },
+                                       OrganizerImage = s.Submission.User.ProfilePicture,
+                                       Date = s.Date.ToString("dd MMM, hh:mm tt"),
+                                       IsSpotlight = s.Submission.IsSpotlight,
+                                       SpotlightOrder = s.SpotlightOrder,
+                                       Status = new DropdownViewModel
+                                       {
+                                           Id = (long)s.Submission.Status,
+                                           Name = s.Submission.Status.ToString()
+                                       },
+                                       CreatedAt = s.CreatedAt
+                                   })
+                                   .AsNoTracking()
+                                   .ToListAsync();
+
+            return new(count, data);
+        }
+
         public async Task<(int Count, IList<ListEventMobileDto>? Data)> GetEventsMobile(EventMobileListParameters parameters, Expression<Func<SubmissionDate, bool>>? filter, string userId)
         {
             var events = _context.SubmissionDates
