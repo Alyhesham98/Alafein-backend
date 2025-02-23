@@ -406,7 +406,7 @@ namespace Presistence.Repositories.Event
         public async Task<bool> SpotlightOrder(long id, int order)
         {
             
-            var data = _context.SubmissionDates.ToList();
+            var data = _context.SubmissionDates.Where(x=>x.Submission.IsSpotlight == true).ToList();
             foreach (var date in data)
             {
                 date.SpotlightOrder = data.IndexOf(date);
