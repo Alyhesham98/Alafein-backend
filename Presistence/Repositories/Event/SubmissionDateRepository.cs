@@ -221,7 +221,7 @@ namespace Presistence.Repositories.Event
             var count = await events.CountAsync();
 
             var data = await events.Skip((parameters.PageNumber - 1) * parameters.PageSize)
-                                   .Take(parameters.PageSize).OrderByDescending(o => o.SpotlightOrder)
+                                   .Take(parameters.PageSize).OrderBy(o => o.SpotlightOrder)
                                    .Select(s => new ListEventDto
                                    {
                                        Id = s.Id,
