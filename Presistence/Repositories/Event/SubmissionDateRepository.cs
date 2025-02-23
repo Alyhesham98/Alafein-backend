@@ -405,6 +405,15 @@ namespace Presistence.Repositories.Event
 
         public async Task<bool> SpotlightOrder(long id, int order)
         {
+            
+            var data = _context.SubmissionDates.ToList();
+            foreach (var date in data)
+            {
+                date.SpotlightOrder = data.IndexOf(date);
+                _context.SubmissionDates.Update(date);
+                _context.SaveChanges();
+            }
+
             await _context.SubmissionDates
                           .Where(x => x.Id == id)
                           .ExecuteUpdateAsync(e => e.SetProperty(d => d.SpotlightOrder, order));
