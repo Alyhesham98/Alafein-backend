@@ -248,7 +248,7 @@ namespace Presistence.Repositories.Event
                                        OrganizerImage = s.Submission.User.ProfilePicture,
                                        Date = s.Date.ToString("dd MMM, hh:mm tt"),
                                        IsSpotlight = s.Submission.IsSpotlight,
-                                       SpotlightOrder = s.SpotlightOrder,
+                                       SpotlightOrder = s.SpotlightOrder+1,
                                        Status = new DropdownViewModel
                                        {
                                            Id = (long)s.Submission.Status,
